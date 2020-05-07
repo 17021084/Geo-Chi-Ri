@@ -17,9 +17,10 @@ function sqr(number) {
 	return number * number;
 }
 
-/**
- * 
- * @param {*} place1 :[lat,long]
+/** 
+ * Return the distance from place1 to place2 (kilometers)
+ * lat and long is in degree (by default) 
+ * @param {*} place1 :[lat,long]  
  * @param {*} place2 :[lat,long]
  * @param {*} fix : number of fragment
  * @param {*} option : degree (default) or radian 
@@ -58,4 +59,4 @@ function distanceOnEarth(place1, place2, fix = FIX_NUMBER, option = 'degree') {
 	);
 }
 
-console.log(distanceOnEarth([ 0, 0 ], [ 90, 0 ]));
+module.exports= distanceOnEarth;
