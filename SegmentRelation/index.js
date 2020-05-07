@@ -1,10 +1,20 @@
-const { moduleOfVector, vectorP1P2, multipVectorP1P2xP3P4 ,getCuttingPoint } = require('../mathLib');
+const { moduleOfVector, vectorP1P2, multipVectorP1P2xP3P4, getCuttingPoint } = require('../mathLib');
 
-// segment1 has been created by point1 point2
-// segment3 has been created by point3 point4
-
-// base segment is  P1P2
-function segmentRelation(point1, point2, point3, point4) {
+/**
+ *  Base segment is  P1P2
+ * Segment1 has been created by point1 point2
+ * Segment3 has been created by point3 point4
+ * @param {*} point1 as a  [x,y,0]
+ * @param {*} point2 as a  [x,y,0]
+ * @param {*} point3 as a  [x,y,0]
+ * @param {*} point4 as a  [x,y,0]
+ * 
+ * return: 
+ * [x,y] is cutting point ,
+ * Overlay,
+ * DontCut,
+ */
+function segmentRelationAlgorithm(point1, point2, point3, point4) {
 	//get Z of vector
 	const Zp12xp13 = multipVectorP1P2xP3P4(point1, point2, point1, point3)[2];
 	const Zp14xp12 = multipVectorP1P2xP3P4(point1, point4, point1, point2)[2];
@@ -42,7 +52,7 @@ function segmentRelation(point1, point2, point3, point4) {
 		//CASE 1 : P3 is not a point in SEGMENT P1P2 . Check P4 whether it is a point in SEGMENT P1P2
 		if (Zp12xp13 !== 0) {
 			if (lengthP1P2 == lengthP1P4 + lengthP2P4) {
-				return 'SegmentOverlap';
+				return [ point4[0], point4[1] ];
 			} else {
 				// DontCut
 				return 'DontCut';
@@ -52,7 +62,7 @@ function segmentRelation(point1, point2, point3, point4) {
 		//CASE 2 : P4 is not a point in SEGMENT P1P2 . Check P3 whether it is a point in SEGMENT P1P2
 		if (Zp14xp12 !== 0) {
 			if (lengthP1P2 == lengthP1P3 + lengthP2P3) {
-				return 'SegmentOverlap';
+				return [ point3[0], point3[1] ];
 			} else {
 				// DontCut
 				return 'DontCut';
@@ -78,4 +88,23 @@ function segmentRelation(point1, point2, point3, point4) {
 	}
 }
 
-console.log(segmentRelation([ 0, 0, 0 ], [ '5', 5, 0 ], [ 0, 0, 0 ], [ 4, 4, 0 ]));
+// console.log(segmentRelation([ 0, 0, 0 ], [ '5', 5, 0 ], [ 0, 0, 0 ], [ 4, 4, 0 ]));
+
+/**
+ * 
+ * Segment1 has been created by point1 point2 , 
+ *  Segment2 has been created by point3 point4
+ * Check the relationship between Segment1 and Segment2 .
+ *  return : [cuttingPoint x , cuttingPoint y] || 'DontCut' || 'OverLap'
+ * 
+ * @param {*} point1 as a  [x,y]
+ * @param {*} point2 as a  [x,y]
+ * @param {*} point3 as a  [x,y]
+ * @param {*} point4 as a  [x,y]
+ * 
+ */
+function SegmentRelation(point1, point2, point3, point4) {
+	return segmentRelationAlgorithm([ ...point1, 0 ], [ ...point2, 0 ], [ ...point3, 0 ], [ ...point4, 0 ]);
+}
+
+module.exports = SegmentRelation;

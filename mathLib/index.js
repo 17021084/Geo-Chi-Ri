@@ -199,7 +199,7 @@ function multipVectorP1P2xP3P4(point1, point2, point3, point4) {
 // console.log(`[${vector[0]},${vector[1]},${vector[2]}]`);
 
 /**
- * Return a array  [x ,y] of vector P1P2   
+ * Return vector P1P2 as array [x ,y]    
  * 
  * @param {*} point1 is array [x1,y1]
  * @param {*} point2 is array [x2,y2]
